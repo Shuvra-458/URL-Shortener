@@ -52,7 +52,7 @@ url_shortener/
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/django-url-shortener.git
+git clone https://github.com/Shuvra-458/URL-Shortener.git
 cd django-url-shortener
 ```
 
