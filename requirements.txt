@@ -6,3 +6,4 @@ django-admin-interface>=0.25.0
 djangorestframework
 python-dotenv
 whitenoise
+gunicorn
