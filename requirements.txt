@@ -7,3 +7,4 @@ djangorestframework
 python-dotenv
 whitenoise
 gunicorn
+django-cors-headers
