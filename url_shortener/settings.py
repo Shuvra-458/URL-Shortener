@@ -185,6 +185,7 @@ DATABASES = {
 }
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+BASE_DOMAIN = os.getenv("BASE_DOMAIN", "http://127.0.0.1:8000")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
