@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from rest_framework.authtoken.views import obtain_auth_token
+from django.http import HttpResponse
 
 
 urlpatterns = [
@@ -11,5 +12,5 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout_user'),
     path('stats/', views.user_url_stats, name='user_url_stats'),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
-    path('', views.home, name='home'), 
+    path('', lambda request: HttpResponse("Hello, Django is working!")),
 ]
