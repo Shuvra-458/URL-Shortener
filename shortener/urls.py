@@ -11,4 +11,5 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout_user'),
     path('stats/', views.user_url_stats, name='user_url_stats'),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    path('', views.home, name='home'), 
 ]
