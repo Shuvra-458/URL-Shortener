@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Django
+db.sqlite3
+*.log
+
+# Environment
+.env
+
+# VSCode / PyCharm
+.vscode/
+.idea/
+
+# Migrations
+**/migrations/*.py
+!**/migrations/__init__.py
