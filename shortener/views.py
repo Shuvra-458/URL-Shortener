@@ -8,6 +8,7 @@ from django.conf import settings
 from datetime import timedelta
 from .models import ShortenedURL
 import json
+import re
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
