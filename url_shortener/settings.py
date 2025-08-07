@@ -153,13 +153,13 @@ DATABASES = {
         'PORT': os.getenv("DB_PORT"),
     }
 }
-<<<<<<< HEAD
+
 
 import os
 import dj_database_url
 DATABASES['default'] = dj_database_url.config(default='sqlite:///db.sqlite3')
-=======
+
 import os
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
->>>>>>> 8294a11 (Prepare for Render deployment)
+
