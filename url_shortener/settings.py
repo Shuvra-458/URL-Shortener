@@ -140,11 +140,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
-DATABASES['default'] = dj_database_url.config(default='sqlite:///db.sqlite3')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql',
@@ -155,7 +153,7 @@ DATABASES = {
         'PORT': os.getenv("DB_PORT"),
     }
 }
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 
