@@ -162,7 +162,7 @@ USE_TZ = True
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
-<<<<<<< HEAD
+
 
 
 import os
@@ -171,9 +171,8 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
-=======
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
->>>>>>> f5d0b90 (Initial Migrations for ShortenedURL Model)
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql',
