@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.conf import settings
 from datetime import timedelta
 from .models import ShortenedURL
 import json
@@ -14,25 +15,35 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 
-
+def is_valid_url(url):
+    # Simple regex for basic URL validation
+    pattern = re.compile(
+        r'^(https?://)?'                        # http:// or https://
+        r'([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}'       # domain
+        r'(/[^\s]*)?$'                          # path
+    )
+    return bool(pattern.match(url))
 @csrf_exempt
 def create_short_url(request):
     if request.method != 'POST':
         return HttpResponseBadRequest("Only POST method is allowed.")
+    
     try:
         data = json.loads(request.body)
         original_url = data.get('original_url')
         custom_code = data.get('custom_code')
         expires_in_days = data.get('expires_in_days', None)
 
-        if not original_url:
-            return JsonResponse({'error': 'Original URL is required.'}, status = 400)
+        if not original_url or not is_valid_url(original_url):
+            return JsonResponse({'error': 'A valid original URL is required.'}, status=400)
+
         if custom_code and ShortenedURL.objects.filter(short_code=custom_code).exists():
             return JsonResponse({'error': 'Custom code already exists.'}, status=400)
+
         url = ShortenedURL(
-            original_url = original_url,
-            short_code = custom_code or None,
-            user = request.user if request.user.is_authenticated else None,
+            original_url=original_url,
+            short_code=custom_code or None,
+            user=request.user if request.user.is_authenticated else None,
         )
 
         if expires_in_days:
@@ -40,11 +51,17 @@ def create_short_url(request):
 
         url.save()
 
+        # Build full short URL with actual host
+        domain = request.get_host()  # gets current host (e.g. render or localhost)
+        scheme = 'https' if request.is_secure() else 'http'
+        short_url = f"{scheme}://{domain}/s/{url.short_code}"
+
         return JsonResponse({
-            'short_url': f"http://127.0.0.1:8000/s/{url.short_code}",
+            'short_url': short_url,
             'original_url': url.original_url,
             'expires_at': url.expires_at,
         })
+
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
  
