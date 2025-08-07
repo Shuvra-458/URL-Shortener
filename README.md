@@ -111,7 +111,7 @@ Authorization: Token your_token_here
 ```json
 POST /register/
 {
-  "username": "shuvrajyoti",
+  "username": "testuser",
   "password": "supersecret"
 }
 ```
@@ -120,7 +120,7 @@ POST /register/
 ```json
 POST /login/
 {
-  "username": "shuvrajyoti",
+  "username": "testuser",
   "password": "supersecret"
 }
 ```
@@ -142,18 +142,3 @@ Headers: Authorization: Token <your_token>
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-## ✨ Author
-
-**Shuvrajyoti Nayak**  
-🔗 [GitHub](https://github.com/YOUR_USERNAME)  
-📧 Email: your.email@example.com
-
----
-
-> 💡 *Feel free to fork this repo, contribute or use this as a boilerplate for any URL-based microservice idea.*
