@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -40,7 +41,7 @@ def create_short_url(request):
         url.save()
 
         return JsonResponse({
-            'short_url': f"http//127.0.0.1:8000/s/{url.short_code}",
+            'short_url': f"http://127.0.0.1:8000/s/{url.short_code}",
             'original_url': url.original_url,
             'expires_at': url.expires_at,
         })
@@ -48,14 +49,17 @@ def create_short_url(request):
         return JsonResponse({'error': str(e)}, status=500)
  
 def redirect_view(request, short_code):
-    url = get_object_or_404(ShortenedURL, short_code=short_code)
+    try:
+        url = ShortenedURL.objects.get(short_code=short_code)
+    except ShortenedURL.DoesNotExist:
+        return JsonResponse({'error': 'URL not found'}, status=404)
 
     if url.is_expired():
         return JsonResponse({'error': 'URL has expired'}, status=410)
     
     url.click_count += 1
     url.save()
-    return redirect(url.original_url)
+    return HttpResponseRedirect(url.original_url)
 
 @csrf_exempt
 def register_user(request):
