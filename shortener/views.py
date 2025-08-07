@@ -54,7 +54,7 @@ def create_short_url(request):
         # Build full short URL with actual host
         domain = request.get_host()  # gets current host (e.g. render or localhost)
         scheme = 'https' if request.is_secure() else 'http'
-        short_url = f"{scheme}://{domain}/s/{url.short_code}"
+        short_url = f"{settings.BASE_DOMAIN}/s/{url.short_code}"
 
         return JsonResponse({
             'short_url': short_url,
